@@ -1,53 +1,101 @@
-Duck[] dod;
-BigDuck bod;
-  
+Neh[] dod;
+BigNeh[] bod;
+
 void setup()
 {
-  size(600, 400);
-  dod = new Duck[30];
+  size(1200, 800);
+  dod = new Neh[900];
+  bod = new BigNeh[3000];
   for (int i=0; i < dod.length; i++)
-  dod[i] = new Duck();
+    dod[i] = new Neh();
+  for (int i=0; i < bod.length; i++)
+    bod[i] = new BigNeh();
+  stroke(10);
 }
 void draw()
 {
-    background(0);
-   for (int i = 0; i < dod.length; i ++)
+  background(0);
+  for (int i = 0; i < bod.length; i ++)
+  {
+    bod[i].show();
+    bod[i].move();
+  }
+  for (int i = 0; i < dod.length; i ++)
   {
     dod[i].show();
     dod[i].move();
   }
 }
-class NormalParticle
-{
-  //your code here
-}
+
 interface fade
 {
   public double sad();
 }
-class Duck 
+class Neh //normal
 {
-  int y,x,movex,movey;
-  float px,py;
-  Duck(){
-    x = 25 + (int)(Math.random()*10);
-    y = 15 + (int)(Math.random()*8);
-    px = random(width);
-    py = random(height);
-    movex = (int)(Math.random()*50)-25;
-    movey = (int)(Math.random()*50)-25;
-  
+  int s, size, d;
+  float px, py, movex, movey;
+  Neh() {
+    size = (int)(Math.random()*2.1)+1;
+    s = 10*size;
+    px = 600;
+    py = 400;
+    d = (int)(Math.random()*4)+1;
+    movex = (float)(Math.random()*60)/(2)+1;
+    movey = (float)(Math.random()*60)/(2)+1;
   }
-  void show(){
-    ellipse(px,py,x,y);
-}
-  void move(){
-    fill(255,255,180);
-    px = px + movex/60;
-    py = py + movey/60;
+  void show() {
+    if (d == 4) {
+      fill(255, 255, 0);
+    }
+    if (d == 3) {
+      fill(0, 0, 255);
+    }
+    if (d == 2) {
+      fill(0, 255, 0);
+    }
+    if (d == 1) {
+      fill(255, 0, 0);
+    }
+
+    ellipse(px, py, s, s);
+  }
+  void move() {
+    if (d == 4) {
+      px = px + movex/10;
+      py = py + movey/10;
+    }
+    if (d == 3) {
+      px = px - movex/10;
+      py = py + movey/10;
+    }
+    if (d == 2) {
+      px = px + movex/10;
+      py = py - movey/10;
+    }
+    if (d == 1) {
+      px = px - movex/10;
+      py = py - movey/10;
+    }
   }
 }
-class BigDuck //uses inheritance
+class BigNeh //oddball
 {
-  //your code here
+  double myAngle, mySpeed;
+  double posx, posy;
+  BigNeh()
+  {
+    myAngle = Math.random()*2*Math.PI;
+    mySpeed = Math.random()*10;
+    posx = 590+(float)Math.random()*20;
+    posy = 390+(float)Math.random()*20;
+  }
+  void show() {
+    fill(0, 0, 165);
+    ellipse((float)posx, (float)posy, 9, 9);
+  }
+  void move() {
+    posx = posx + Math.cos(myAngle)*mySpeed;
+    posy = posy + Math.cos(myAngle)*mySpeed;
+  }
 }
